@@ -3,11 +3,7 @@ import styled from 'styled-components';
 import ButtonRow from '../molecules/ButtonRow/ButtonRow';
 import Card from '../molecules/Card/Card';
 
-export default function CardGrid(props: {
-  order: OrderType;
-  handleClickOrder: (type: OrderType) => void;
-}) {
-  const { order, handleClickOrder } = props;
+export default function CardGrid() {
   const [list, setList] = useState<{ imageSrc: string; text: string }[]>([
     { imageSrc: '/images/default.png', text: 'test' },
     { imageSrc: '/images/default.png', text: 'test' },
@@ -20,7 +16,7 @@ export default function CardGrid(props: {
   ]);
   return (
     <StyledCardGrid>
-      <ButtonRow order={order} handleClickOrder={handleClickOrder} />
+      <ButtonRow />
       <StyledCardList>
         {list.map(item => (
           <Card imageSrc={item.imageSrc} text={item.text} />

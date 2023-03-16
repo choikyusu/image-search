@@ -1,13 +1,12 @@
 import styled from 'styled-components';
+import useButton from '../../../hooks/useButton';
 
-export default function Button(props: {
-  isSelected: boolean;
-  text: string;
-  handleClickOrder: () => void;
-}) {
-  const { text, isSelected, handleClickOrder } = props;
+export default function Button(props: { id: OrderType; text: string }) {
+  const { id, text } = props;
+  const { handleClickItem, isSelected } = useButton({ id });
+
   return (
-    <StyledButton onClick={handleClickOrder} isSelected={isSelected}>
+    <StyledButton id={id} onClick={handleClickItem} isSelected={isSelected}>
       {text}
     </StyledButton>
   );
