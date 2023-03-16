@@ -24,6 +24,4 @@ const StyledCard = styled.div`
   border: none;
   border-radius: 0.28571429rem;
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-  transition: box-shadow 0.1s ease, transform 0.1s ease,
-    -webkit-box-shadow 0.1s ease, -webkit-transform 0.1s ease;
 `;

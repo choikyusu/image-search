@@ -33,6 +33,7 @@ const StyledWrapper = styled.div<{ show: boolean }>`
   top: 35px;
   width: 100%;
   cursor: pointer;
+  background: #ffffff;
 `;
 
 const StyledDropdownList = styled.ul`

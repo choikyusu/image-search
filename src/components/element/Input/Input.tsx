@@ -35,13 +35,6 @@ export default function Input(props: {
   );
 }
 
-const StyledInputWrapper = styled.div`
-  position: relative;
-  box-sizing: inherit;
-  display: inline-flex;
-  align-items: center;
-`;
-
 const StyledInput = styled.input`
   margin: 0;
   max-width: 100%;
