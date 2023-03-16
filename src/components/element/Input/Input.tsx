@@ -1,14 +1,42 @@
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 import Icon from './InputIcon/InputIcon';
+import DropdownList from './DropdownList/DropdownList';
+import useInput from '../../../hooks/useInput';
+import { SEARCH_PLACEHOLDER } from '../../../constants/text.constant';
 
 export default function Input() {
+  const {
+    inputRef,
+    keyword,
+    recentList,
+    showList,
+    handleClickItem,
+    handleClickDelete,
+    handleInputChange,
+    handleInputKeyDown,
+    handleInputClick,
+  } = useInput();
+
   return (
     <StyledInputWrapper>
-      <StyledInput placeholder="검색어를 입력하세요" />
+      <StyledInput
+        ref={inputRef}
+        placeholder={SEARCH_PLACEHOLDER}
+        value={keyword}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeyDown}
+        onClick={handleInputClick}
+      />
       <Icon>
         <BsSearch />
       </Icon>
+      <DropdownList
+        showList={showList}
+        recentList={recentList}
+        handleClickDelete={handleClickDelete}
+        handleClickItem={handleClickItem}
+      />
     </StyledInputWrapper>
   );
 }
