@@ -1,20 +1,13 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useClickOutside from './useClickOutside';
 
 const MAX_LENGTH = 10;
 
-export default function useInput() {
+export default function useSearch() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const [list, setList] = useState<{ key: string; value: string }[]>([
-    { key: '1', value: 'a' },
-    { key: '2', value: 'b' },
-    { key: '3', value: 'c' },
-    { key: '4', value: 'd' },
-    { key: '5', value: 'e' },
-    { key: '6', value: 'f' },
-  ]);
+  const [list, setList] = useState<KeywordItem[]>([]);
 
   function handleClickItem(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     const target = e.target as HTMLLIElement;
@@ -23,6 +16,7 @@ export default function useInput() {
 
   function handleClickDelete() {
     setList([]);
+    window.localStorage.setItem('list', '[]');
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -34,10 +28,12 @@ export default function useInput() {
     if (event.key === 'Enter' && keyword !== '') {
       const target = event.target as HTMLInputElement;
       event.preventDefault();
-      setList([
+      const newList = [
         { key: new Date().getTime().toString(), value: keyword },
         ...list,
-      ]);
+      ];
+      setList(newList);
+      window.localStorage.setItem('list', JSON.stringify(newList));
       target.blur();
     }
   }
@@ -49,6 +45,13 @@ export default function useInput() {
   useClickOutside(inputRef, () => {
     setShowList(false);
   });
+
+  useEffect(() => {
+    const list = JSON.parse(
+      window.localStorage.getItem('list') || '[]',
+    ) as KeywordItem[];
+    setList(list);
+  }, []);
 
   return {
     inputRef,

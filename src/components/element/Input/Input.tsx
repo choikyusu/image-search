@@ -1,25 +1,25 @@
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 import Icon from './InputIcon/InputIcon';
-import DropdownList from './DropdownList/DropdownList';
-import useInput from '../../../hooks/useInput';
 import { SEARCH_PLACEHOLDER } from '../../../constants/text.constant';
 
-export default function Input() {
+export default function Input(props: {
+  inputRef: React.MutableRefObject<HTMLInputElement | null>;
+  keyword: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleInputClick: () => void;
+}) {
   const {
     inputRef,
     keyword,
-    recentList,
-    showList,
-    handleClickItem,
-    handleClickDelete,
     handleInputChange,
     handleInputKeyDown,
     handleInputClick,
-  } = useInput();
+  } = props;
 
   return (
-    <StyledInputWrapper>
+    <>
       <StyledInput
         ref={inputRef}
         placeholder={SEARCH_PLACEHOLDER}
@@ -31,13 +31,7 @@ export default function Input() {
       <Icon>
         <BsSearch />
       </Icon>
-      <DropdownList
-        showList={showList}
-        recentList={recentList}
-        handleClickDelete={handleClickDelete}
-        handleClickItem={handleClickItem}
-      />
-    </StyledInputWrapper>
+    </>
   );
 }
 

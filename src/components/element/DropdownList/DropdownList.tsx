@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import { DELETE_RECENT_KEYWORD } from '../../../../constants/text.constant';
+import { DELETE_RECENT_KEYWORD } from '../../../constants/text.constant';
 
 export default function DropdownList(props: {
-  recentList: {
-    key: string;
-    value: string;
-  }[];
+  recentList: KeywordItem[];
   showList: boolean;
   handleClickDelete: () => void;
   handleClickItem: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
@@ -19,9 +16,11 @@ export default function DropdownList(props: {
             {item.value}
           </StyleItem>
         ))}
-        <StyleItem onClick={handleClickDelete}>
-          {DELETE_RECENT_KEYWORD}
-        </StyleItem>
+        {recentList.length ? (
+          <StyleItem onClick={handleClickDelete}>
+            {DELETE_RECENT_KEYWORD}
+          </StyleItem>
+        ) : null}
       </StyledDropdownList>
     </StyledWrapper>
   );
@@ -30,7 +29,7 @@ export default function DropdownList(props: {
 const StyledWrapper = styled.div<{ show: boolean }>`
   display: ${props => (props.show ? 'block' : 'none')};
   position: absolute;
-  zindex: 5000;
+  z-index: 5000;
   top: 35px;
   width: 100%;
   cursor: pointer;
