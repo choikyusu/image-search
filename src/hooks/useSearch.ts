@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useSearchState } from '../provider/SearchProvider';
 import useClickOutside from './useClickOutside';
 
 const MAX_LENGTH = 10;
 const KEY_ENTER = 13;
 
 export default function useSearch() {
+  const { keyword, setKeyword } = useSearchState();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
-  const [keyword, setKeyword] = useState('');
-  const [list, setList] = useState<KeywordItem[]>([]);
+  const [list, setList] = useState<KeywordItem[]>(getListFromLocalStorage());
 
   function handleClickItem(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     const target = e.target as HTMLLIElement;
@@ -51,16 +52,8 @@ export default function useSearch() {
     setShowList(false);
   });
 
-  useEffect(() => {
-    const list = JSON.parse(
-      window.localStorage.getItem('list') || '[]',
-    ) as KeywordItem[];
-    setList(list);
-  }, []);
-
   return {
     inputRef,
-    keyword,
     list,
     recentList: list.slice(0, MAX_LENGTH),
     showList,
@@ -71,4 +64,10 @@ export default function useSearch() {
     handleInputKeyDown,
     handleInputClick,
   };
+
+  function getListFromLocalStorage() {
+    return JSON.parse(
+      window.localStorage.getItem('list') || '[]',
+    ) as KeywordItem[];
+  }
 }

@@ -2,27 +2,11 @@ import styled from 'styled-components';
 import { ACCURATE_ORDER, NEWEST_ORDER } from '../../../constants/text.constant';
 import Button from '../../element/Button/Button';
 
-export default function ButtonRow(props: {
-  order: OrderType;
-  handleClickOrder: (type: OrderType) => void;
-}) {
-  const { order, handleClickOrder } = props;
+export default function ButtonRow() {
   return (
     <StyledButtonRow>
-      <Button
-        isSelected={order === 'ACCURATE'}
-        text={ACCURATE_ORDER}
-        handleClickOrder={() => {
-          handleClickOrder('ACCURATE');
-        }}
-      />
-      <Button
-        isSelected={order === 'NEWEST'}
-        text={NEWEST_ORDER}
-        handleClickOrder={() => {
-          handleClickOrder('NEWEST');
-        }}
-      />
+      <Button id="ACCURATE" text={ACCURATE_ORDER} />
+      <Button id="NEWEST" text={NEWEST_ORDER} />
     </StyledButtonRow>
   );
 }

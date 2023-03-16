@@ -6,7 +6,6 @@ import Input from '../../element/Input/Input';
 export default function Search() {
   const {
     inputRef,
-    keyword,
     recentList,
     showList,
     handleClickItem,
@@ -20,7 +19,6 @@ export default function Search() {
     <StyledSeachWrapper>
       <Input
         inputRef={inputRef}
-        keyword={keyword}
         handleInputChange={handleInputChange}
         handleInputKeyDown={handleInputKeyDown}
         handleInputClick={handleInputClick}
