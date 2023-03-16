@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import useClickOutside from './useClickOutside';
 
 const MAX_LENGTH = 10;
+const KEY_ENTER = 13;
 
 export default function useSearch() {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -25,7 +26,11 @@ export default function useSearch() {
   }
 
   function handleInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter' && keyword !== '') {
+    if (
+      event.key === 'Enter' &&
+      event.keyCode === KEY_ENTER &&
+      keyword !== ''
+    ) {
       const target = event.target as HTMLInputElement;
       event.preventDefault();
       const newList = [
