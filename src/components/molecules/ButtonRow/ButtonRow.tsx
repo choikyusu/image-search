@@ -28,6 +28,7 @@ export default function ButtonRow(props: {
 }
 
 const StyledButtonRow = styled.div`
+  justify-content: center;
   display: flex;
   flex-direction: row;
   gap: 10px;
