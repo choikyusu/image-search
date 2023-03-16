@@ -1,24 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Input from './components/element/Input/Input';
+import Button from './components/element/Button/Button';
+import Card from './components/element/Card/Card';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Input />
+      <Button text="정확도순" />
+      <Button text="최신순" />
+      <Card imageSrc="/images/default.png" text="test" />
     </div>
   );
 }
