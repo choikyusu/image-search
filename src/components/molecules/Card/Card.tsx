@@ -5,7 +5,7 @@ export default function Card(props: { imageSrc: string; text: string }) {
   const { imageSrc, text } = props;
 
   return (
-    <StyledCard>
+    <StyledCard className="card">
       <Image imageSrc={imageSrc} />
       <h3>{text}</h3>
     </StyledCard>
@@ -13,7 +13,7 @@ export default function Card(props: { imageSrc: string; text: string }) {
 }
 
 const StyledCard = styled.div`
-  width: 300px;
+  width: 100%;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
