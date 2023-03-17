@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { getImages } from '../api/api';
 import { useSearchState } from '../provider/SearchProvider';
 import useClickOutside from './useClickOutside';
 
@@ -7,8 +6,8 @@ const MAX_LENGTH = 10;
 const KEY_ENTER = 13;
 
 export default function useSearch() {
-  const { keyword, order, page, setKeyword, setImageInfoList } =
-    useSearchState();
+  const [keyword, setKeyword] = useState('');
+  const { setPage, setSearchKeyword } = useSearchState();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
   const [recentSearchList, setRecentSearchList] = useState<KeywordItem[]>(
@@ -17,6 +16,8 @@ export default function useSearch() {
 
   function handleClickItem(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     const target = e.target as HTMLLIElement;
+    setSearchKeyword(target.innerHTML);
+    setPage(1);
     setKeyword(target.innerHTML);
   }
 
@@ -44,12 +45,12 @@ export default function useSearch() {
         { key: new Date().getTime().toString(), value: keyword },
         ...recentSearchList,
       ];
+      setSearchKeyword(keyword);
       setRecentSearchList(newList);
+      setPage(1);
       window.localStorage.setItem('list', JSON.stringify(newList));
       target.blur();
       setShowList(false);
-
-      setImageInfoList(await getImages({ keyword, order, page }));
     }
   }
 
@@ -62,6 +63,7 @@ export default function useSearch() {
   });
 
   return {
+    keyword,
     inputRef,
     list: recentSearchList,
     recentList: recentSearchList.slice(0, MAX_LENGTH),

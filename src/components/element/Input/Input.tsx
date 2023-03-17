@@ -2,18 +2,21 @@ import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 import Icon from './InputIcon/InputIcon';
 import { SEARCH_PLACEHOLDER } from '../../../constants/text.constant';
-import { useSearchState } from '../../../provider/SearchProvider';
 
 export default function Input(props: {
+  keyword: string;
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleInputKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   handleInputClick: () => void;
 }) {
-  const { inputRef, handleInputChange, handleInputKeyDown, handleInputClick } =
-    props;
-
-  const { keyword } = useSearchState();
+  const {
+    keyword,
+    inputRef,
+    handleInputChange,
+    handleInputKeyDown,
+    handleInputClick,
+  } = props;
 
   return (
     <>

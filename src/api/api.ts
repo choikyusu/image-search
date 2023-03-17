@@ -3,11 +3,11 @@ import { IMAGE_SEARCH_URL } from '../constants/api.contant';
 const MAX_SIZE = 10;
 
 export async function getImages(params: {
-  keyword: string;
+  searchKeyword: string;
   order: string;
   page: number;
 }) {
-  const { keyword, order, page } = params;
+  const { searchKeyword, order, page } = params;
   try {
     const params: {
       size: number;
@@ -15,7 +15,7 @@ export async function getImages(params: {
       sort: string;
       page: number;
       [key: string]: number | string;
-    } = { size: MAX_SIZE, query: keyword, sort: order, page };
+    } = { size: MAX_SIZE, query: searchKeyword, sort: order, page };
 
     const paramString = Object.keys(params)
       .map(
@@ -30,7 +30,7 @@ export async function getImages(params: {
       },
     });
     const result: ImageResult = await response.json();
-    return result.documents;
+    return result.documents || [];
   } catch (e) {
     return [];
   }

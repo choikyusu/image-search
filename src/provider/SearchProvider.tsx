@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
 type SearchState = {
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  searchKeyword: string;
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
   order: OrderType;
   setOrder: React.Dispatch<React.SetStateAction<OrderType>>;
   imageInfoList: ImageInfo[];
@@ -17,7 +17,7 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
   const { children } = props;
 
   const [order, setOrder] = useState<OrderType>('accuracy');
-  const [keyword, setKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [imageInfoList, setImageInfoList] = useState<ImageInfo[]>([]);
   const [page, setPage] = useState(1);
 
@@ -25,14 +25,14 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
     () => ({
       order,
       setOrder,
-      keyword,
-      setKeyword,
+      searchKeyword,
+      setSearchKeyword,
       imageInfoList,
       setImageInfoList,
       page,
       setPage,
     }),
-    [order, keyword, imageInfoList, page],
+    [order, searchKeyword, imageInfoList, page],
   );
 
   return (
