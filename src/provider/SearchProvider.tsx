@@ -27,7 +27,7 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
       imageInfoList,
       setImageInfoList,
     }),
-    [order, keyword],
+    [order, keyword, imageInfoList],
   );
 
   return (

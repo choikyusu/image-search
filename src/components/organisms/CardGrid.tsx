@@ -1,25 +1,16 @@
-import { useState } from 'react';
 import styled from 'styled-components';
+import { useSearchState } from '../../provider/SearchProvider';
 import ButtonRow from '../molecules/ButtonRow/ButtonRow';
 import Card from '../molecules/Card/Card';
 
 export default function CardGrid() {
-  const [list, setList] = useState<{ imageSrc: string; text: string }[]>([
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-    { imageSrc: '/images/default.png', text: 'test' },
-  ]);
+  const { imageInfoList } = useSearchState();
   return (
     <StyledCardGrid>
       <ButtonRow />
       <StyledCardList>
-        {list.map(item => (
-          <Card imageSrc={item.imageSrc} text={item.text} />
+        {imageInfoList.map(item => (
+          <Card imageSrc={item.image_url} text={item.display_sitename} />
         ))}
       </StyledCardList>
     </StyledCardGrid>
