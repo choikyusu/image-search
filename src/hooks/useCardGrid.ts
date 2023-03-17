@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
 
+const HEIGHT_MARGIN = 20;
+
 export default function useCardGrid() {
   const { imageInfoList, page, setPage } = useSearchState();
   const [loading, setLoading] = useState(false);
@@ -15,10 +17,8 @@ export default function useCardGrid() {
 
   useEffect(() => {
     function handleScroll() {
-      const { scrollY, innerHeight } = window;
-      const { offsetHeight } = document.body;
-      if (loading || scrollY + innerHeight < offsetHeight - 5) return;
-      setPage(page + 1);
+      if (loading || !reachBottom()) return;
+      setPage(prev => prev + 1);
       setLoading(true);
     }
 
@@ -30,7 +30,13 @@ export default function useCardGrid() {
   }, [loading]);
 
   useEffect(() => {
-    if (!loading) return;
+    if (!loading) {
+      if (!existScrollbar() && !isInitState()) {
+        toast('스크롤이 생기지않아 다음페이지를 불러옵니다.');
+        setPage(prev => prev + 1);
+      }
+      return;
+    }
 
     setLoading(false);
   }, [imageInfoList]);
@@ -38,4 +44,22 @@ export default function useCardGrid() {
     imageInfoList,
     initLoading: apiLoading && page === 1,
   };
+
+  function existScrollbar() {
+    return (
+      document.documentElement.scrollHeight >
+      document.documentElement.clientHeight
+    );
+  }
+
+  function isInitState() {
+    return !(page >= 1 && imageInfoList.length);
+  }
+
+  function reachBottom() {
+    const { scrollY, innerHeight } = window;
+    const { offsetHeight } = document.body;
+
+    return !(scrollY + innerHeight < offsetHeight - HEIGHT_MARGIN);
+  }
 }

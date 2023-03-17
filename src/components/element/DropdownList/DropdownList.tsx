@@ -25,26 +25,36 @@ export default function DropdownList(props: {
     </StyledWrapper>
   );
 }
-
 const StyledWrapper = styled.div<{ show: boolean }>`
-  display: ${props => (props.show ? 'block' : 'none')};
+  display: ${({ show }) => (show ? 'block' : 'none')};
   position: absolute;
   z-index: 5000;
   top: 35px;
   width: 100%;
   cursor: pointer;
   background: #ffffff;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 `;
 
 const StyledDropdownList = styled.ul`
   border: 1px solid rgba(34, 36, 38, 0.15);
   color: rgba(0, 0, 0, 0.87);
   border-radius: 0.28571429rem;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 `;
 
 const StyleItem = styled.li`
   padding: 0.3em;
   &:hover {
     background-color: #f9fafb;
+  }
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:not(:first-child) {
+    border-top: 1px solid rgba(34, 36, 38, 0.15);
+  }
+  &:last-child {
+    border-bottom-left-radius: 0.28571429rem;
+    border-bottom-right-radius: 0.28571429rem;
   }
 `;
