@@ -5,6 +5,8 @@ export default function useImage() {
   const [lazyStyle, setLazyStyle] = useState<React.CSSProperties>({
     visibility: 'hidden',
     position: 'absolute',
+    left: 0,
+    right: 0,
   });
   const [defaultStyle, setDefaultStyle] = useState<React.CSSProperties>({
     display: 'block',
