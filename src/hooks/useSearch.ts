@@ -53,7 +53,9 @@ export default function useSearch() {
         },
       })
         .then(res => res.json())
-        .then((res: ImageResult) => console.log(res))
+        .then((res: ImageResult) => {
+          setImageInfoList(res.documents);
+        })
         .catch(error => console.error(error));
     }
   }
