@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { IMAGE_SEARCH_URL } from '../constants/api.contant';
+import { getImages } from '../api/api';
 import { useSearchState } from '../provider/SearchProvider';
 import useClickOutside from './useClickOutside';
 
@@ -8,7 +7,8 @@ const MAX_LENGTH = 10;
 const KEY_ENTER = 13;
 
 export default function useSearch() {
-  const { keyword, order, setKeyword, setImageInfoList } = useSearchState();
+  const { keyword, order, page, setKeyword, setImageInfoList } =
+    useSearchState();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
   const [recentSearchList, setRecentSearchList] = useState<KeywordItem[]>(
@@ -30,7 +30,9 @@ export default function useSearch() {
     setKeyword(target.value);
   }
 
-  function handleInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  async function handleInputKeyDown(
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) {
     if (
       event.key === 'Enter' &&
       event.keyCode === KEY_ENTER &&
@@ -47,20 +49,7 @@ export default function useSearch() {
       target.blur();
       setShowList(false);
 
-      fetch(
-        `${IMAGE_SEARCH_URL}?query=${keyword}&size=80&sort=${order}&page=1`,
-        {
-          headers: {
-            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-        .then(res => res.json())
-        .then((res: ImageResult) => {
-          setImageInfoList(res.documents);
-        })
-        .catch(error => toast(error));
+      setImageInfoList(await getImages({ keyword, order, page }));
     }
   }
 

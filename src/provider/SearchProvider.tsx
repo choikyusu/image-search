@@ -7,6 +7,8 @@ type SearchState = {
   setOrder: React.Dispatch<React.SetStateAction<OrderType>>;
   imageInfoList: ImageInfo[];
   setImageInfoList: React.Dispatch<React.SetStateAction<ImageInfo[]>>;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const SearchStateContext = createContext<SearchState | null>(null);
@@ -17,6 +19,7 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
   const [order, setOrder] = useState<OrderType>('accuracy');
   const [keyword, setKeyword] = useState('');
   const [imageInfoList, setImageInfoList] = useState<ImageInfo[]>([]);
+  const [page, setPage] = useState(1);
 
   const value = useMemo(
     () => ({
@@ -26,8 +29,10 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
       setKeyword,
       imageInfoList,
       setImageInfoList,
+      page,
+      setPage,
     }),
-    [order, keyword, imageInfoList],
+    [order, keyword, imageInfoList, page],
   );
 
   return (
