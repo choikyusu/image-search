@@ -7,7 +7,7 @@ import SkeletonCard from '../molecules/SkeletonCard/SkeletonCard';
 export default function CardGrid() {
   const { imageInfoList, initLoading } = useCardGrid();
 
-  const skeletonCardList = Array.from({ length: 20 }, (_, i) => (
+  const skeletonCardList = Array.from({ length: 30 }, (_, i) => (
     <SkeletonCard key={i} />
   ));
 

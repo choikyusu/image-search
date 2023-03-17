@@ -1,56 +1,40 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const SkeletonCard = () => {
   return (
-    <CardWrapper>
-      <ImageSkeleton />
-      <ContentWrapper>
-        <TextSkeleton />
-        <TextSkeleton />
-      </ContentWrapper>
-    </CardWrapper>
+    <StyledCard>
+      <SkeletonImage />
+      <SkeletonText />
+      <SkeletonText />
+    </StyledCard>
   );
 };
 
-const CardWrapper = styled.div`
-  width: 250px;
-  height: 350px;
-  padding: 20px;
+const StyledCard = styled.div`
+  width: 300px;
+  background-color: white;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-`;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
 
-const shimmer = css`
-  0% {
-    background-position: -500px 0;
-  }
-  100% {
-    background-position: 500px 0;
+  &:hover {
+    transform: scale(1.15);
   }
 `;
 
-const ImageSkeleton = styled.div`
+export const SkeletonImage = styled.div`
   width: 100%;
   height: 200px;
-  margin-bottom: 10px;
-  background: linear-gradient(to right, #ececec 0%, #f7f7f7 50%, #ececec 100%);
-  background-size: 1000px 200px;
-  animation: ${shimmer} 1s linear infinite;
-  border-radius: 10px;
+  background-color: #ececec;
+  border-radius: 10px 10px 0 0;
 `;
 
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const TextSkeleton = styled.div`
+const SkeletonText = styled.div`
   width: 100%;
   height: 20px;
-  margin-bottom: 5px;
-  background: linear-gradient(to right, #ececec 0%, #f7f7f7 50%, #ececec 100%);
-  background-size: 1000px 20px;
-  animation: ${shimmer} 1s linear infinite;
+  margin: 10px 0;
+  background-color: #ececec;
   border-radius: 5px;
 `;
 

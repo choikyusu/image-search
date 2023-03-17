@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
 
@@ -14,9 +15,9 @@ export default function useCardGrid() {
 
   useEffect(() => {
     function handleScroll() {
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-      if (loading || scrollTop + clientHeight < scrollHeight - 5) return;
+      const { scrollY, innerHeight } = window;
+      const { offsetHeight } = document.body;
+      if (loading || scrollY + innerHeight < offsetHeight - 5) return;
       setPage(page + 1);
       setLoading(true);
     }
