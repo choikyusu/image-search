@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
 
-const HEIGHT_MARGIN = 200;
+const HEIGHT_MARGIN = 400;
 
 export default function useCardGrid() {
   const { imageInfoList, page, setPage } = useSearchState();
