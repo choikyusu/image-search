@@ -3,9 +3,7 @@ interface KeywordItem {
   value: string;
 }
 
-type Newest = 'NEWEST';
-type Accurate = 'ACCURATE';
-type OrderType = Newest | Accurate;
+type OrderType = 'recency' | 'accuracy';
 
 interface ImageResult {
   documents: ImageInfo[];

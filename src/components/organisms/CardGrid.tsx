@@ -10,7 +10,11 @@ export default function CardGrid() {
       <ButtonRow />
       <StyledCardList>
         {imageInfoList.map(item => (
-          <Card imageSrc={item.image_url} text={item.display_sitename} />
+          <Card
+            key={item.image_url}
+            imageSrc={item.image_url}
+            text={item.display_sitename}
+          />
         ))}
       </StyledCardList>
     </StyledCardGrid>

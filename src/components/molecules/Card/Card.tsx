@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import Image from '../../element/Image/Image';
 
 export default function Card(props: { imageSrc: string; text: string }) {
   const { imageSrc, text } = props;
+
   return (
     <StyledCard>
-      <img referrerPolicy="no-referrer" src={imageSrc} alt="기본 이미지" />
+      <Image imageSrc={imageSrc} />
       <h3>{text}</h3>
     </StyledCard>
   );
@@ -26,5 +28,9 @@ const StyledCard = styled.div`
     width: 100%;
     height: 200px;
     object-fit: cover;
+  }
+
+  .lazy-load-image-background {
+    display: block !important;
   }
 `;

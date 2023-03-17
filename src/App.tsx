@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ImageSearchPage from './components/page/ImageSearchPage';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
