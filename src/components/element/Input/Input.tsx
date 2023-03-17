@@ -19,7 +19,7 @@ export default function Input(props: {
   } = props;
 
   return (
-    <>
+    <StyledWrapper>
       <StyledInput
         ref={inputRef}
         placeholder={SEARCH_PLACEHOLDER}
@@ -31,44 +31,33 @@ export default function Input(props: {
       <Icon>
         <BsSearch />
       </Icon>
-    </>
+    </StyledWrapper>
   );
 }
 
-const StyledInput = styled.input`
-  margin: 0;
-  max-width: 100%;
-  -webkit-box-flex: 1;
-  flex: 1 0 auto;
-  outline: 0;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  text-align: left;
-  line-height: 1.21428571em;
-  padding: 0.67857143em 1em;
-  background: #fafafa;
-  border: 1px solid rgba(34, 36, 38, 0.15);
-  color: rgba(0, 0, 0, 0.87);
-  border-radius: 0.28571429rem;
-  transition: box-shadow 0.1s ease, border-color 0.1s ease,
-    -webkit-box-shadow 0.1s ease;
-  box-shadow: none;
+const StyledWrapper = styled.div`
+  position: relative;
+`;
 
-  &:active {
-    border-color: rgba(0, 0, 0, 0.3);
-    color: rgba(0, 0, 0, 0.87);
-    box-shadow: none;
+const StyledInput = styled.input`
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 48px 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: #aaa;
   }
 
   &:focus {
     border-color: #85b7d9;
-    color: rgba(0, 0, 0, 0.8);
-    box-shadow: none;
-
-    &::placeholder {
-      color: rgba(100, 100, 100, 0.8);
-    }
+    box-shadow: 0px 0px 4px #85b7d9;
   }
+
   &::placeholder {
-    color: rgba(150, 150, 150, 0.8);
+    color: #999;
   }
 `;

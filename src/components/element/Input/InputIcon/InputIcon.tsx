@@ -6,6 +6,9 @@ export default function Icon(props: { children: React.ReactNode }) {
 
 const StyledIcon = styled.i`
   position: absolute;
-  right: 2px;
-  color: rgba(100, 100, 100, 0.8);
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  ont-size: 20px;
+  color: #555;
 `;

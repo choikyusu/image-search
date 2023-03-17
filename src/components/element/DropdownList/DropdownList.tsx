@@ -17,7 +17,7 @@ export default function DropdownList(props: {
           </StyleItem>
         ))}
         {recentList.length ? (
-          <StyleItem onClick={handleClickDelete}>
+          <StyleItem onClick={handleClickDelete} deleteButton>
             {DELETE_RECENT_KEYWORD}
           </StyleItem>
         ) : null}
@@ -29,8 +29,9 @@ const StyledWrapper = styled.div<{ show: boolean }>`
   display: ${({ show }) => (show ? 'block' : 'none')};
   position: absolute;
   z-index: 5000;
-  top: 35px;
-  width: 100%;
+  top: 42px;
+  width: 89%;
+  left: 6%;
   cursor: pointer;
   background: #ffffff;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -43,7 +44,7 @@ const StyledDropdownList = styled.ul`
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 `;
 
-const StyleItem = styled.li`
+const StyleItem = styled.li<{ deleteButton?: boolean }>`
   padding: 0.3em;
   &:hover {
     background-color: #f9fafb;
@@ -57,4 +58,22 @@ const StyleItem = styled.li`
     border-bottom-left-radius: 0.28571429rem;
     border-bottom-right-radius: 0.28571429rem;
   }
+
+  ${({ deleteButton }) =>
+    deleteButton &&
+    `
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #db2828;
+    border: none;
+    border-radius: 0.28571429rem;
+    font-weight: 700;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      background-color: #ff4646;
+      cursor: pointer;
+    }
+  `}
 `;
