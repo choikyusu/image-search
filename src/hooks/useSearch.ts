@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useSearchState } from '../provider/SearchProvider';
 import useClickOutside from './useClickOutside';
+import { toast } from 'react-toastify';
 
 const MAX_LENGTH = 10;
 const KEY_ENTER = 13;
@@ -17,13 +18,14 @@ export default function useSearch() {
   function handleClickItem(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     const target = e.target as HTMLLIElement;
     setSearchKeyword(target.innerHTML);
-    setPage(1);
     setKeyword(target.innerHTML);
+    setPage(1);
   }
 
   function handleClickDelete() {
     setRecentSearchList([]);
     window.localStorage.setItem('list', '[]');
+    toast('최근 검색어를 삭제했습니다.');
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {

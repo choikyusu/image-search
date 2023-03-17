@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const SkeletonCard = () => {
   return (
-    <StyledCard>
+    <StyledCard className="card">
       <SkeletonImage />
       <SkeletonText />
       <SkeletonText />
@@ -11,7 +11,7 @@ const SkeletonCard = () => {
 };
 
 const StyledCard = styled.div`
-  width: 300px;
+  width: 100%;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
