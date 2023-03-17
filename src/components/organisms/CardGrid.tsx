@@ -3,6 +3,7 @@ import ButtonRow from '../molecules/ButtonRow/ButtonRow';
 import Card from '../molecules/Card/Card';
 import useCardGrid from '../../hooks/useCardGrid';
 import SkeletonCard from '../molecules/SkeletonCard/SkeletonCard';
+import Border from '../element/Border/Border';
 
 export default function CardGrid() {
   const { imageInfoList, initLoading } = useCardGrid();
@@ -14,6 +15,7 @@ export default function CardGrid() {
   return (
     <StyledCardGrid>
       <ButtonRow />
+      <Border />
       <StyledCardList>
         {initLoading
           ? skeletonCardList
