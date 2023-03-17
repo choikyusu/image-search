@@ -45,6 +45,8 @@ const StyledDropdownList = styled.ul`
 `;
 
 const StyleItem = styled.li<{ deleteButton?: boolean }>`
+  white-space: nowrap;
+  overflow: hidden;
   padding: 0.3em;
   &:hover {
     background-color: #f9fafb;
