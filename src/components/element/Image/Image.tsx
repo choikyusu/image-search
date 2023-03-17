@@ -1,6 +1,6 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import styled from 'styled-components';
 import useImage from '../../../hooks/useImage';
+import { SkeletonImage } from '../../molecules/SkeletonCard/SkeletonCard';
 
 export const DEFAULT_IMAGE_URL = '/images/default.png';
 
@@ -11,7 +11,7 @@ export default function Image(props: { imageSrc: string }) {
 
   return (
     <>
-      <StyledDefaultImage style={defaultStyle} src={DEFAULT_IMAGE_URL} alt="" />
+      <SkeletonImage style={defaultStyle} />
       <LazyLoadImage
         style={lazyStyle}
         referrerPolicy="no-referrer"
@@ -24,5 +24,3 @@ export default function Image(props: { imageSrc: string }) {
     </>
   );
 }
-
-const StyledDefaultImage = styled.img``;
