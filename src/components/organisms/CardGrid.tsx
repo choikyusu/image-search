@@ -19,13 +19,17 @@ export default function CardGrid() {
       <StyledCardList>
         {initLoading
           ? skeletonCardList
-          : imageInfoList.map(item => (
-              <Card
-                key={item.image_url}
-                imageSrc={item.image_url}
-                text={item.display_sitename}
-              />
-            ))}
+          : imageInfoList.map((item, index) => {
+              return (
+                <Card
+                  index={index}
+                  key={`${item.image_url}${index}`}
+                  imageSrc={item.image_url}
+                  text={item.display_sitename}
+                  thumbnail={item.thumbnail_url}
+                />
+              );
+            })}
       </StyledCardList>
     </StyledCardGrid>
   );

@@ -1,16 +1,24 @@
+import React from 'react';
 import styled from 'styled-components';
 import Image from '../../element/Image/Image';
 
-export default function Card(props: { imageSrc: string; text: string }) {
-  const { imageSrc, text } = props;
+function Card(props: {
+  index: number;
+  imageSrc: string;
+  text: string;
+  thumbnail: string;
+}) {
+  const { index, imageSrc, text, thumbnail } = props;
 
   return (
     <StyledCard className="card">
-      <Image imageSrc={imageSrc} />
+      <Image imageSrc={imageSrc} thumbnail={thumbnail} />
       <h3>{text}</h3>
     </StyledCard>
   );
 }
+
+export default React.memo(Card);
 
 const StyledCard = styled.div`
   width: 100%;

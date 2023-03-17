@@ -4,8 +4,8 @@ import { SkeletonImage } from '../../molecules/SkeletonCard/SkeletonCard';
 
 export const DEFAULT_IMAGE_URL = '/images/default.png';
 
-export default function Image(props: { imageSrc: string }) {
-  const { imageSrc } = props;
+export default function Image(props: { imageSrc: string; thumbnail: string }) {
+  const { imageSrc, thumbnail } = props;
 
   const { lazyStyle, defaultStyle, handleLoad, handleError } = useImage();
 
