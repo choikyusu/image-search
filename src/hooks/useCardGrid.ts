@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { throttle } from 'lodash';
 import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
 
-const HEIGHT_MARGIN = 20;
+const HEIGHT_MARGIN = 200;
 
 export default function useCardGrid() {
   const { imageInfoList, page, setPage } = useSearchState();
@@ -16,11 +17,11 @@ export default function useCardGrid() {
   }, [apiLoading]);
 
   useEffect(() => {
-    function handleScroll() {
+    const handleScroll = throttle(() => {
       if (loading || !reachBottom()) return;
       setPage(prev => prev + 1);
       setLoading(true);
-    }
+    }, 200);
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     if (loading) return () => {};
