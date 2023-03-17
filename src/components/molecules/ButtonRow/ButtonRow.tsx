@@ -5,8 +5,8 @@ import Button from '../../element/Button/Button';
 export default function ButtonRow() {
   return (
     <StyledButtonRow>
-      <Button id="ACCURATE" text={ACCURATE_ORDER} />
-      <Button id="NEWEST" text={NEWEST_ORDER} />
+      <Button id="accuracy" text={ACCURATE_ORDER} />
+      <Button id="recency" text={NEWEST_ORDER} />
     </StyledButtonRow>
   );
 }

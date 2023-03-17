@@ -14,7 +14,7 @@ const SearchStateContext = createContext<SearchState | null>(null);
 export default function SearchProvider(props: { children: React.ReactNode }) {
   const { children } = props;
 
-  const [order, setOrder] = useState<OrderType>('ACCURATE');
+  const [order, setOrder] = useState<OrderType>('accuracy');
   const [keyword, setKeyword] = useState('');
   const [imageInfoList, setImageInfoList] = useState<ImageInfo[]>([]);
 
