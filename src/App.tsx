@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useImageApi from './hooks/useImageApi';
 import { useSearchState } from './provider/SearchProvider';
 import { Loading } from './components/element/Loading/Loading';
+import './style.css';
 
 function App() {
   const { apiLoading } = useImageApi();
