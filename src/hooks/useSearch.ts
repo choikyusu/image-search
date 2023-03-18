@@ -25,7 +25,7 @@ export default function useSearch() {
   function handleClickDelete() {
     setRecentSearchList([]);
     window.localStorage.setItem('list', '[]');
-    toast('최근 검색어를 삭제했습니다.');
+    toast('최근 검색어를 삭제했습니다.', { toastId: 'delete' });
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
