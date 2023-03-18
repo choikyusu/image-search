@@ -15,16 +15,19 @@ export default function useSearch() {
     getListFromLocalStorage(),
   );
 
-  function handleClickItem(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
-    const target = e.target as HTMLLIElement;
-    setSearchKeyword(target.innerHTML);
-    setKeyword(target.innerHTML);
+  function handleClickItem(item: string) {
+    setSearchKeyword(item);
+    setKeyword(item);
     setPage(1);
 
-    updateRecentSearchList(target.innerHTML);
+    updateRecentSearchList(item);
   }
 
-  function handleClickDelete() {
+  function handleClickDeleteItem(item: string) {
+    deleteItemAtRecentSearchList(item);
+  }
+
+  function handleClickDeleteAll() {
     setRecentSearchList([]);
     window.localStorage.setItem('list', '[]');
     toast('최근 검색어를 삭제했습니다.', { toastId: 'delete' });
@@ -68,7 +71,8 @@ export default function useSearch() {
     showList,
     setShowList,
     handleClickItem,
-    handleClickDelete,
+    handleClickDeleteAll,
+    handleClickDeleteItem,
     handleInputChange,
     handleInputKeyDown,
     handleInputClick,
@@ -90,5 +94,13 @@ export default function useSearch() {
     setSearchKeyword(keyword);
     setRecentSearchList(newList);
     window.localStorage.setItem('list', JSON.stringify(newList));
+  }
+
+  function deleteItemAtRecentSearchList(keyword: string) {
+    setRecentSearchList(recentSearchList.filter(item => item !== keyword));
+    window.localStorage.setItem(
+      'list',
+      JSON.stringify(recentSearchList.filter(item => item !== keyword)),
+    );
   }
 }
