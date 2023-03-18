@@ -1,4 +1,5 @@
 import { IMAGE_SEARCH_URL } from '../constants/api.contant';
+import NetworkError from '../ErrorBoundary/Error/NetworkError';
 
 const MAX_SIZE = 10;
 
@@ -29,9 +30,14 @@ export async function getImages(params: {
         'Content-Type': 'application/json',
       },
     });
-    const result: ImageResult = await response.json();
-    return result.documents || [];
-  } catch (e) {
-    return [];
+
+    if (response.status === 200) {
+      const result: ImageResult = await response.json();
+      return result.documents || [];
+    }
+    throw new NetworkError('서버 응답이 올바르지 않습니다.');
+  } catch (e: any) {
+    if (e instanceof Error) throw e;
   }
+  return [];
 }

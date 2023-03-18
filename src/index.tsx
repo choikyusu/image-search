@@ -5,20 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SearchProvider from './provider/SearchProvider';
 import { ToastContainer } from 'react-toastify';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <SearchProvider>
-      <App />
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar
-      />
-    </SearchProvider>
+    <ErrorBoundary>
+      <SearchProvider>
+        <App />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+        />
+      </SearchProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
 );
 
