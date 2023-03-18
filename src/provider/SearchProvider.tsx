@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
+import { getValueFromLocalStorage } from '../utils/storage.util';
 
 type SearchState = {
   searchKeyword: string;
@@ -17,7 +18,9 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
   const { children } = props;
 
   const [order, setOrder] = useState<OrderType>('accuracy');
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState(
+    getValueFromLocalStorage<string>('keyword'),
+  );
   const [imageInfoList, setImageInfoList] = useState<ImageInfo[]>([]);
   const [page, setPage] = useState(1);
 
