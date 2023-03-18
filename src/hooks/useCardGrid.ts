@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
 import { ACTIVE_SCROLL_AREA, MAX_PAGE } from '../constants/value.constant';
-import { LOAD_MORE_DATA, REACH_LAST_PAGE } from '../constants/text.constant';
+import { REACH_LAST_PAGE } from '../constants/text.constant';
 
 export default function useCardGrid() {
-  const { imageInfoList, page, setPage } = useSearchState();
+  const { imageInfoList, page, setPage, lastApiRequest } = useSearchState();
   const { apiLoading } = useImageApi();
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,8 @@ export default function useCardGrid() {
   useEffect(() => {
     const handleScroll = throttle(() => {
       if (loading || !reachBottom()) return;
-      if (page >= MAX_PAGE) {
+      if (!imageInfoList.length) return;
+      if (page >= MAX_PAGE || lastApiRequest) {
         toast(REACH_LAST_PAGE, { toastId: 'last' });
         return;
       }
@@ -32,14 +33,11 @@ export default function useCardGrid() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading]);
+  }, [loading, page, imageInfoList]);
 
   useEffect(() => {
     if (!loading) {
-      if (!existScrollbar() && !isInitState()) {
-        toast(LOAD_MORE_DATA, {
-          toastId: 'dup',
-        });
+      if (!existScrollbar() && !isInitState() && !lastApiRequest) {
         setPage(prev => prev + 1);
       }
       return;

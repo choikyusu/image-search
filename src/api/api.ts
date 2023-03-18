@@ -9,6 +9,10 @@ export async function getImages(params: {
   page: number;
 }) {
   const { searchKeyword, order, page } = params;
+  const defaultResult = {
+    documents: [],
+    meta: { is_end: true, pageable_count: 0, total_count: 0 },
+  };
   try {
     const params: QueryParameter = {
       size: MAX_SIZE,
@@ -23,13 +27,13 @@ export async function getImages(params: {
 
     if (response.status === RESPONSE_SUCESS) {
       const result: ImageResult = await response.json();
-      return result.documents || [];
+      return result || defaultResult;
     }
     throw new NetworkError(ERROR_SERVER_RESPONSE);
   } catch (e: any) {
     if (e instanceof Error) throw e;
   }
-  return [];
+  return defaultResult;
 }
 
 function getApiHeader() {
