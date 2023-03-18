@@ -13,7 +13,7 @@ export default function Image(props: { imageSrc: string; thumbnail: string }) {
       referrerPolicy="no-referrer"
       alt="이미지"
       src={imageSrc}
-      placeholderSrc={DEFAULT_IMAGE_URL} // thumbnail이 비율이 달라 사용 안함.
+      placeholderSrc={thumbnail}
       onError={handleError}
     />
   );

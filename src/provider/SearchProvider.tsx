@@ -11,6 +11,8 @@ type SearchState = {
   setImageInfoList: React.Dispatch<React.SetStateAction<ImageInfo[]>>;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  lastApiRequest: boolean;
+  setLastApiRequest: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SearchStateContext = createContext<SearchState | null>(null);
@@ -24,6 +26,7 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
   );
   const [imageInfoList, setImageInfoList] = useState<ImageInfo[]>([]);
   const [page, setPage] = useState(1);
+  const [lastApiRequest, setLastApiRequest] = useState(false);
 
   const value = useMemo(
     () => ({
@@ -35,6 +38,8 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
       setImageInfoList,
       page,
       setPage,
+      lastApiRequest,
+      setLastApiRequest,
     }),
     [order, searchKeyword, imageInfoList, page],
   );

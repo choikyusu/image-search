@@ -15,7 +15,7 @@ export default function useSearch() {
   const [keyword, setKeyword] = useState(
     getValueFromLocalStorage<string>('keyword'),
   );
-  const { setPage, setSearchKeyword } = useSearchState();
+  const { setPage, setSearchKeyword, setLastApiRequest } = useSearchState();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
   const [recentSearchList, setRecentSearchList] = useState<string[]>(
@@ -27,6 +27,7 @@ export default function useSearch() {
     setSearchKeyword(item);
     setKeyword(item);
     setPage(1);
+    setLastApiRequest(false);
 
     updateRecentSearchList(item);
   }
@@ -64,6 +65,7 @@ export default function useSearch() {
       setPage(1);
       target.blur();
       setShowList(false);
+      setLastApiRequest(false);
     }
   }
 
