@@ -4,35 +4,12 @@ import useSearch from '../../../hooks/useSearch';
 import Input from '../../element/Input/Input';
 
 export default function Search() {
-  const {
-    keyword,
-    inputRef,
-    recentList,
-    showList,
-    handleClickItem,
-    handleClickDeleteAll,
-    handleClickDeleteItem,
-    handleInputChange,
-    handleInputKeyDown,
-    handleInputClick,
-  } = useSearch();
+  const { inputProps, dropdownListProps } = useSearch();
 
   return (
     <StyledSeachWrapper>
-      <Input
-        keyword={keyword}
-        inputRef={inputRef}
-        handleInputChange={handleInputChange}
-        handleInputKeyDown={handleInputKeyDown}
-        handleInputClick={handleInputClick}
-      />
-      <DropdownList
-        showList={showList}
-        recentList={recentList}
-        handleClickDeleteAll={handleClickDeleteAll}
-        handleClickDeleteItem={handleClickDeleteItem}
-        handleClickItem={handleClickItem}
-      />
+      <Input {...inputProps} />
+      <DropdownList {...dropdownListProps} />
     </StyledSeachWrapper>
   );
 }

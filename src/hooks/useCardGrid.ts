@@ -3,9 +3,8 @@ import { throttle } from 'lodash';
 import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
-import { MAX_PAGE } from '../constants/value.constant';
-
-const HEIGHT_MARGIN = 400;
+import { ACTIVE_SCROLL_AREA, MAX_PAGE } from '../constants/value.constant';
+import { LOAD_MORE_DATA, REACH_LAST_PAGE } from '../constants/text.constant';
 
 export default function useCardGrid() {
   const { imageInfoList, page, setPage } = useSearchState();
@@ -13,7 +12,7 @@ export default function useCardGrid() {
   const [loading, setLoading] = useState(false);
 
   useLayoutEffect(() => {
-    if (apiLoading && page === 1) document.body.style.overflowY = 'hidden';
+    if (firstLoadApi()) document.body.style.overflowY = 'hidden';
     else document.body.style.overflowY = 'auto';
   }, [apiLoading]);
 
@@ -21,7 +20,7 @@ export default function useCardGrid() {
     const handleScroll = throttle(() => {
       if (loading || !reachBottom()) return;
       if (page >= MAX_PAGE) {
-        toast('마지막 페이지에 도달했습니다.', { toastId: 'last' });
+        toast(REACH_LAST_PAGE, { toastId: 'last' });
         return;
       }
       setPage(prev => prev + 1);
@@ -38,7 +37,7 @@ export default function useCardGrid() {
   useEffect(() => {
     if (!loading) {
       if (!existScrollbar() && !isInitState()) {
-        toast('스크롤이 생기지않아 다음페이지를 불러옵니다.', {
+        toast(LOAD_MORE_DATA, {
           toastId: 'dup',
         });
         setPage(prev => prev + 1);
@@ -68,12 +67,16 @@ export default function useCardGrid() {
     const { scrollY, innerHeight } = window;
     const { offsetHeight } = document.body;
 
-    return !(scrollY + innerHeight < offsetHeight - HEIGHT_MARGIN);
+    return !(scrollY + innerHeight < offsetHeight - ACTIVE_SCROLL_AREA);
   }
 
   function getLoadingType(): LoadingType {
     if (apiLoading && page === 1) return 'InitLoading';
     if (loading) return 'ScrollLoading';
     return 'None';
+  }
+
+  function firstLoadApi() {
+    return apiLoading && page === 1;
   }
 }

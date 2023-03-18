@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
+import { ERROR_NOT_FIND_PROVIDER } from '../constants/text.constant';
 import { getValueFromLocalStorage } from '../utils/storage.util';
 
 type SearchState = {
@@ -47,6 +48,6 @@ export default function SearchProvider(props: { children: React.ReactNode }) {
 
 export function useSearchState() {
   const state = useContext(SearchStateContext);
-  if (!state) throw new Error('Cannot find searchProvider');
+  if (!state) throw new Error(ERROR_NOT_FIND_PROVIDER);
   return state;
 }
