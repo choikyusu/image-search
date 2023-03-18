@@ -5,6 +5,8 @@ interface KeywordItem {
 
 type OrderType = 'recency' | 'accuracy';
 
+type LoadingType = 'InitLoading' | 'ScrollLoading' | 'None';
+
 interface ImageResult {
   documents: ImageInfo[];
   meta: { is_end: boolean; pageable_count: number; total_count: number };

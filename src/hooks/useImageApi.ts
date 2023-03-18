@@ -11,7 +11,9 @@ export default function useImageApi() {
     useSearchState();
 
   const fetch = useCallback(async () => {
-    if (searchKeyword === '') return;
+    if (searchKeyword === '') {
+      return;
+    }
     if (page > MAX_PAGE) {
       toast('마지막 페이지에 도달했습니다.');
       return;

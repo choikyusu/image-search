@@ -4,20 +4,22 @@ import Card from '../molecules/Card/Card';
 import useCardGrid from '../../hooks/useCardGrid';
 import SkeletonCard from '../molecules/SkeletonCard/SkeletonCard';
 import Border from '../element/Border/Border';
+import LoadingBar from '../element/Loading/LoadingBar';
 
 export default function CardGrid() {
-  const { imageInfoList, initLoading } = useCardGrid();
+  const { imageInfoList, loadingType } = useCardGrid();
 
-  const skeletonCardList = Array.from({ length: 30 }, (_, i) => (
-    <SkeletonCard key={i} />
-  ));
+  const skeletonCardList = Array.from(
+    { length: loadingType === 'InitLoading' ? 30 : 0 },
+    (_, i) => <SkeletonCard key={i} />,
+  );
 
   return (
     <StyledCardGrid>
       <ButtonRow />
       <Border />
       <StyledCardList>
-        {initLoading
+        {loadingType === 'InitLoading'
           ? skeletonCardList
           : imageInfoList.map((item, index) => {
               return (
@@ -30,6 +32,7 @@ export default function CardGrid() {
                 />
               );
             })}
+        {loadingType === 'ScrollLoading' ? <LoadingBar /> : null}
       </StyledCardList>
     </StyledCardGrid>
   );
