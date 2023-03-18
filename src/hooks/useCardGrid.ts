@@ -3,6 +3,7 @@ import { throttle } from 'lodash';
 import { toast } from 'react-toastify';
 import { useSearchState } from '../provider/SearchProvider';
 import useImageApi from './useImageApi';
+import { MAX_PAGE } from '../constants/value.constant';
 
 const HEIGHT_MARGIN = 400;
 
@@ -19,6 +20,10 @@ export default function useCardGrid() {
   useEffect(() => {
     const handleScroll = throttle(() => {
       if (loading || !reachBottom()) return;
+      if (page >= MAX_PAGE) {
+        toast('마지막 페이지에 도달했습니다.', { toastId: 'last' });
+        return;
+      }
       setPage(prev => prev + 1);
       setLoading(true);
     }, 200);
@@ -33,7 +38,9 @@ export default function useCardGrid() {
   useEffect(() => {
     if (!loading) {
       if (!existScrollbar() && !isInitState()) {
-        toast('스크롤이 생기지않아 다음페이지를 불러옵니다.');
+        toast('스크롤이 생기지않아 다음페이지를 불러옵니다.', {
+          toastId: 'dup',
+        });
         setPage(prev => prev + 1);
       }
       return;

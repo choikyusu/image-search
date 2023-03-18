@@ -1,8 +1,9 @@
+import React from 'react';
 import styled from 'styled-components';
 import { ACCURATE_ORDER, NEWEST_ORDER } from '../../../constants/text.constant';
 import Button from '../../element/Button/Button';
 
-export default function ButtonRow() {
+function ButtonRow() {
   return (
     <StyledButtonRow>
       <Button id="accuracy" text={ACCURATE_ORDER} />
@@ -10,6 +11,8 @@ export default function ButtonRow() {
     </StyledButtonRow>
   );
 }
+
+export default React.memo(ButtonRow);
 
 const StyledButtonRow = styled.div`
   justify-content: center;
