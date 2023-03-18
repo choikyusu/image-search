@@ -1,8 +1,3 @@
-interface KeywordItem {
-  key: string;
-  value: string;
-}
-
 type OrderType = 'recency' | 'accuracy';
 
 type LoadingType = 'InitLoading' | 'ScrollLoading' | 'None';

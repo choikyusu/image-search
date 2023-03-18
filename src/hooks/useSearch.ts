@@ -11,7 +11,7 @@ export default function useSearch() {
   const { setPage, setSearchKeyword } = useSearchState();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
-  const [recentSearchList, setRecentSearchList] = useState<KeywordItem[]>(
+  const [recentSearchList, setRecentSearchList] = useState<string[]>(
     getListFromLocalStorage(),
   );
 
@@ -20,6 +20,8 @@ export default function useSearch() {
     setSearchKeyword(target.innerHTML);
     setKeyword(target.innerHTML);
     setPage(1);
+
+    updateRecentSearchList(target.innerHTML);
   }
 
   function handleClickDelete() {
@@ -43,14 +45,8 @@ export default function useSearch() {
     ) {
       const target = event.target as HTMLInputElement;
       event.preventDefault();
-      const newList = [
-        { key: new Date().getTime().toString(), value: keyword },
-        ...recentSearchList,
-      ];
-      setSearchKeyword(keyword);
-      setRecentSearchList(newList);
+      updateRecentSearchList(keyword);
       setPage(1);
-      window.localStorage.setItem('list', JSON.stringify(newList));
       target.blur();
       setShowList(false);
     }
@@ -79,8 +75,20 @@ export default function useSearch() {
   };
 
   function getListFromLocalStorage() {
-    return JSON.parse(
-      window.localStorage.getItem('list') || '[]',
-    ) as KeywordItem[];
+    return JSON.parse(window.localStorage.getItem('list') || '[]') as string[];
+  }
+
+  function updateRecentSearchList(keyword: string) {
+    let newList: string[] = [];
+    if (recentSearchList.indexOf(keyword) > -1) {
+      const filteredList = recentSearchList.filter(item => item !== keyword);
+      newList = [keyword, ...filteredList];
+    } else {
+      newList = [keyword, ...recentSearchList];
+    }
+
+    setSearchKeyword(keyword);
+    setRecentSearchList(newList);
+    window.localStorage.setItem('list', JSON.stringify(newList));
   }
 }
