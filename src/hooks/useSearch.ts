@@ -6,6 +6,7 @@ import {
   getValueFromLocalStorage,
   setValueToLocalStorage,
 } from '../utils/storage.util';
+import { DELETE_RECENT_KEYWORD_MESSGAE } from '../constants/text.constant';
 
 const MAX_LENGTH = 10;
 const KEY_ENTER = 13;
@@ -39,7 +40,7 @@ export default function useSearch() {
     setRecentSearchList([]);
     setValueToLocalStorage('list', '[]');
     setValueToLocalStorage('keyword', '');
-    toast('최근 검색어를 삭제했습니다.', { toastId: 'delete' });
+    toast(DELETE_RECENT_KEYWORD_MESSGAE, { toastId: 'delete' });
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -75,18 +76,20 @@ export default function useSearch() {
   });
 
   return {
-    keyword,
-    inputRef,
-    list: recentSearchList,
-    recentList: recentSearchList.slice(0, MAX_LENGTH),
-    showList,
-    setShowList,
-    handleClickItem,
-    handleClickDeleteAll,
-    handleClickDeleteItem,
-    handleInputChange,
-    handleInputKeyDown,
-    handleInputClick,
+    inputProps: {
+      keyword,
+      inputRef,
+      handleInputChange,
+      handleInputKeyDown,
+      handleInputClick,
+    },
+    dropdownListProps: {
+      showList,
+      recentList: recentSearchList.slice(0, MAX_LENGTH),
+      handleClickDeleteAll,
+      handleClickDeleteItem,
+      handleClickItem,
+    },
   };
 
   function updateRecentSearchList(keyword: string) {

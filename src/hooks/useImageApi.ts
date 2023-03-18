@@ -10,15 +10,14 @@ export default function useImageApi() {
   const { setError } = useError();
 
   const fetch = useCallback(async () => {
-    if (searchKeyword === '') {
-      return;
-    }
+    if (searchKeyword === '') return;
 
     setApiLoading(true);
+
     try {
       const data = await getImages({ searchKeyword, order, page });
 
-      if (page === 1) setImageInfoList(data);
+      if (isFirstPage()) setImageInfoList(data);
       else if (data.length) setImageInfoList([...imageInfoList, ...data]);
 
       setApiLoading(false);
@@ -32,4 +31,8 @@ export default function useImageApi() {
   }, [fetch]);
 
   return { apiLoading };
+
+  function isFirstPage() {
+    return page === 1;
+  }
 }
