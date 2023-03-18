@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { DELETE_RECENT_KEYWORD } from '../../../constants/text.constant';
 
 export default function DropdownList(props: {
-  recentList: KeywordItem[];
+  recentList: string[];
   showList: boolean;
   handleClickDelete: () => void;
   handleClickItem: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
@@ -12,8 +12,8 @@ export default function DropdownList(props: {
     <StyledWrapper show={showList}>
       <StyledDropdownList>
         {recentList.map(item => (
-          <StyleItem key={item.key} onClick={handleClickItem}>
-            {item.value}
+          <StyleItem key={item} onClick={handleClickItem}>
+            {item}
           </StyleItem>
         ))}
         {recentList.length ? (
