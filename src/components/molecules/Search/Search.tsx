@@ -10,7 +10,8 @@ export default function Search() {
     recentList,
     showList,
     handleClickItem,
-    handleClickDelete,
+    handleClickDeleteAll,
+    handleClickDeleteItem,
     handleInputChange,
     handleInputKeyDown,
     handleInputClick,
@@ -28,7 +29,8 @@ export default function Search() {
       <DropdownList
         showList={showList}
         recentList={recentList}
-        handleClickDelete={handleClickDelete}
+        handleClickDeleteAll={handleClickDeleteAll}
+        handleClickDeleteItem={handleClickDeleteItem}
         handleClickItem={handleClickItem}
       />
     </StyledSeachWrapper>

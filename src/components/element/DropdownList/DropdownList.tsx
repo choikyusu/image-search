@@ -1,23 +1,36 @@
 import styled from 'styled-components';
 import { DELETE_RECENT_KEYWORD } from '../../../constants/text.constant';
+import { FaTimes } from 'react-icons/fa';
 
 export default function DropdownList(props: {
   recentList: string[];
   showList: boolean;
-  handleClickDelete: () => void;
-  handleClickItem: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  handleClickDeleteAll: () => void;
+  handleClickDeleteItem: (item: string) => void;
+  handleClickItem: (item: string) => void;
 }) {
-  const { recentList, showList, handleClickItem, handleClickDelete } = props;
+  const {
+    recentList,
+    showList,
+    handleClickItem,
+    handleClickDeleteAll,
+    handleClickDeleteItem,
+  } = props;
   return (
     <StyledWrapper show={showList}>
       <StyledDropdownList>
         {recentList.map(item => (
-          <StyleItem key={item} onClick={handleClickItem}>
-            {item}
+          <StyleItem key={item}>
+            <div onClick={() => handleClickItem(item)} aria-hidden>
+              {item}
+            </div>
+            <DeleteButton onClick={() => handleClickDeleteItem(item)}>
+              <FaTimes />
+            </DeleteButton>
           </StyleItem>
         ))}
         {recentList.length ? (
-          <StyleItem onClick={handleClickDelete} deleteButton>
+          <StyleItem onClick={handleClickDeleteAll} deleteButton>
             {DELETE_RECENT_KEYWORD}
           </StyleItem>
         ) : null}
@@ -45,8 +58,10 @@ const StyledDropdownList = styled.ul`
 `;
 
 const StyleItem = styled.li<{ deleteButton?: boolean }>`
-  white-space: nowrap;
-  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
   padding: 0.3em;
   &:hover {
     background-color: #f9fafb;
@@ -78,4 +93,23 @@ const StyleItem = styled.li<{ deleteButton?: boolean }>`
       cursor: pointer;
     }
   `}
+
+  > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85%;
+    flex-grow: 1;
+  }
+`;
+
+const DeleteButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #db2828;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    color: #ff4646;
+  }
 `;
