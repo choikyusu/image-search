@@ -8,8 +8,8 @@ const HEIGHT_MARGIN = 400;
 
 export default function useCardGrid() {
   const { imageInfoList, page, setPage } = useSearchState();
-  const [loading, setLoading] = useState(false);
   const { apiLoading } = useImageApi();
+  const [loading, setLoading] = useState(false);
 
   useLayoutEffect(() => {
     if (apiLoading && page === 1) document.body.style.overflowY = 'hidden';
@@ -38,12 +38,12 @@ export default function useCardGrid() {
       }
       return;
     }
-
     setLoading(false);
   }, [imageInfoList]);
+
   return {
     imageInfoList,
-    initLoading: apiLoading && page === 1,
+    loadingType: getLoadingType(),
   };
 
   function existScrollbar() {
@@ -62,5 +62,11 @@ export default function useCardGrid() {
     const { offsetHeight } = document.body;
 
     return !(scrollY + innerHeight < offsetHeight - HEIGHT_MARGIN);
+  }
+
+  function getLoadingType(): LoadingType {
+    if (apiLoading && page === 1) return 'InitLoading';
+    if (loading) return 'ScrollLoading';
+    return 'None';
   }
 }
