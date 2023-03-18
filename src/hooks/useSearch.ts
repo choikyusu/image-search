@@ -2,20 +2,27 @@ import { useRef, useState } from 'react';
 import { useSearchState } from '../provider/SearchProvider';
 import useClickOutside from './useClickOutside';
 import { toast } from 'react-toastify';
+import {
+  getValueFromLocalStorage,
+  setValueToLocalStorage,
+} from '../utils/storage.util';
 
 const MAX_LENGTH = 10;
 const KEY_ENTER = 13;
 
 export default function useSearch() {
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(
+    getValueFromLocalStorage<string>('keyword'),
+  );
   const { setPage, setSearchKeyword } = useSearchState();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [showList, setShowList] = useState(false);
   const [recentSearchList, setRecentSearchList] = useState<string[]>(
-    getListFromLocalStorage(),
+    getValueFromLocalStorage<string[]>('list', 'array'),
   );
 
   function handleClickItem(item: string) {
+    setValueToLocalStorage('keyword', item);
     setSearchKeyword(item);
     setKeyword(item);
     setPage(1);
@@ -25,11 +32,13 @@ export default function useSearch() {
 
   function handleClickDeleteItem(item: string) {
     deleteItemAtRecentSearchList(item);
+    if (item === keyword) setValueToLocalStorage('keyword', '');
   }
 
   function handleClickDeleteAll() {
     setRecentSearchList([]);
-    window.localStorage.setItem('list', '[]');
+    setValueToLocalStorage('list', '[]');
+    setValueToLocalStorage('keyword', '');
     toast('최근 검색어를 삭제했습니다.', { toastId: 'delete' });
   }
 
@@ -49,6 +58,8 @@ export default function useSearch() {
       const target = event.target as HTMLInputElement;
       event.preventDefault();
       updateRecentSearchList(keyword);
+      setValueToLocalStorage('keyword', keyword);
+      setSearchKeyword(keyword);
       setPage(1);
       target.blur();
       setShowList(false);
@@ -78,10 +89,6 @@ export default function useSearch() {
     handleInputClick,
   };
 
-  function getListFromLocalStorage() {
-    return JSON.parse(window.localStorage.getItem('list') || '[]') as string[];
-  }
-
   function updateRecentSearchList(keyword: string) {
     let newList: string[] = [];
     if (recentSearchList.indexOf(keyword) > -1) {
@@ -91,14 +98,13 @@ export default function useSearch() {
       newList = [keyword, ...recentSearchList];
     }
 
-    setSearchKeyword(keyword);
     setRecentSearchList(newList);
-    window.localStorage.setItem('list', JSON.stringify(newList));
+    setValueToLocalStorage('list', JSON.stringify(newList));
   }
 
   function deleteItemAtRecentSearchList(keyword: string) {
     setRecentSearchList(recentSearchList.filter(item => item !== keyword));
-    window.localStorage.setItem(
+    setValueToLocalStorage(
       'list',
       JSON.stringify(recentSearchList.filter(item => item !== keyword)),
     );
