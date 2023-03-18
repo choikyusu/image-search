@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { getImages } from '../api/api';
 import { useSearchState } from '../provider/SearchProvider';
 import { toast } from 'react-toastify';
+import useError from './useError';
 
 const MAX_PAGE = 50;
 
@@ -9,6 +10,7 @@ export default function useImageApi() {
   const [apiLoading, setApiLoading] = useState(false);
   const { searchKeyword, page, order, setImageInfoList, imageInfoList } =
     useSearchState();
+  const { setError } = useError();
 
   const fetch = useCallback(async () => {
     if (searchKeyword === '') {
@@ -26,8 +28,8 @@ export default function useImageApi() {
       else if (data.length) setImageInfoList([...imageInfoList, ...data]);
 
       setApiLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError(error);
     }
   }, [searchKeyword, page, order]);
 
